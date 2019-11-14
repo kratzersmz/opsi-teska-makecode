@@ -75,7 +75,7 @@ endif
 ; ----------------------------------------------------------------
 
 [DosInAnIcon_CreateDir]
-mkdir -p $InstallDir$
+mkdir -p "$InstallDir$"
 
 [Files_Copy]
 copy -s "%ScriptPath%\makecode.exe" $InstallDir$
@@ -85,7 +85,7 @@ set_basefolder common_desktopdirectory
 set_subfolder ""
 set_link
    name: makecode
-   target: $InstallDir$
+   target: $InstallDir$\makecode.exe
    parameters:
    working_dir:
    icon_file: $InstallDir$
