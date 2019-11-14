@@ -80,14 +80,3 @@ mkdir -p "$InstallDir$"
 [Files_Copy]
 copy -s "%ScriptPath%\makecode.exe" $InstallDir$
 
-[LinkFolder_install_64]
-set_basefolder common_desktopdirectory
-set_subfolder ""
-set_link
-   name: makecode
-   target: $InstallDir$\makecode.exe
-   parameters:
-   working_dir:
-   icon_file: $InstallDir$
-   icon_index: 0
-end_link

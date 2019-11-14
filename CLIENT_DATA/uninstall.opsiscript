@@ -72,4 +72,4 @@ delete -sf $InstallDir$
 [LinkFolder_delete]
 set_basefolder common_desktopdirectory
 set_subfolder ""
-delete_element "makecode"
+delete_element "MakeCode for microbit"
