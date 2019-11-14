@@ -1,0 +1,75 @@
+; ----------------------------------------------------------------
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/en/credits/
+; ----------------------------------------------------------------
+
+
+[Actions]
+requiredWinstVersion >= "4.11.4.3"
+ScriptErrorMessages = false
+
+DefVar $SetupType$
+DefVar $ProductId$ 
+DefVar $Setupfile$ 
+DefVar $InstallDir$
+DefVar $MinimumSpace$
+DefVar $ExitCode$
+DefVar $ErrorMsg$
+DefVar $LicenseRequired$
+DefVar $LicenseKey$
+DefVar $LicensePool$
+DefVar $MsiId$
+DefVar $NsisInstallBatch$
+DefVar $LogDir$
+
+Set $LogDir$ = "%opsiLogDir%"
+
+
+; ----------------------------------------------------------------
+; ----------------------------------------------------------------
+
+; $ProductId$ is the name of the product in opsi, only lower letters, no umlauts, no white spaces, use '-' as a seperator
+Set $ProductId$       = "teska-makecode"
+; the path where we find the product after the installation
+Set $InstallDir$      = "%ProgramFilesSysnativeDir%\makecode"
+Set $LicenseRequired$ = "false"
+Set $LicensePool$     = "p_" + $ProductId$
+Set $MinimumSpace$    = "200 MB"
+
+; ----------------------------------------------------------------
+; ----------------------------------------------------------------
+
+if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
+   LogError "Not enough space on %SystemDrive%, " + $MinimumSpace$ + " on drive %SystemDrive% needed for " + $ProductId$
+   isFatalError "No Space"
+   ; Stop process and set installation status to failed
+else
+   
+   Message "Uninstall " + $ProductId$ + " ..."
+   
+   
+   comment "Uninstall program"
+   ChangeDirectory "%SCRIPTPATH%"
+   ;----------------------------------------------
+   Files_Remove
+   
+   Message "Erstelle Link auf Desktop"
+   LinkFolder_delete
+   
+   ;----------------------------------------------
+endif
+
+
+; ----------------------------------------------------------------
+; uninstall section
+; ----------------------------------------------------------------
+
+[Files_Remove]
+delete -sf $InstallDir$
+
+[LinkFolder_delete]
+set_basefolder common_desktopdirectory
+set_subfolder ""
+delete_element "makecode"
