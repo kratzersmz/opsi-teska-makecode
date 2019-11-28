@@ -23,7 +23,7 @@ DefVar $LicensePool$
 DefVar $MsiId$
 DefVar $NsisInstallBatch$
 DefVar $LogDir$
-
+DefVar $desktopicon$
 Set $LogDir$ = "%opsiLogDir%"
 
 
@@ -38,8 +38,8 @@ Set $LicenseRequired$ = "false"
 Set $LicensePool$     = "p_" + $ProductId$
 Set $MinimumSpace$    = "200 MB"
 
-DefVar $ShutdownTime$
-Set $ShutdownTime$ = GetProductProperty("val_shutdowntime", "18:00")
+Set $desktopicon$ = GetProductProperty("desktopicon", "nein")
+
 ; ----------------------------------------------------------------
 ; ----------------------------------------------------------------
 
@@ -62,11 +62,16 @@ else
    ;----------------------------------------------
    DosInAnIcon_CreateDir
    Files_Copy
+   LinkFolder_programms
    
    Message "Erstelle Link auf Desktop"
-   LinkFolder_install_64
-   
-   ;----------------------------------------------
+    ;----------------------------------------------
+
+        if $desktopicon$ = "ja"
+                comment "Make Shortcuts on Desktop"
+                LinkFolder_icon
+        endif
+
 endif
 
 
@@ -78,5 +83,28 @@ endif
 mkdir -p "$InstallDir$"
 
 [Files_Copy]
-copy -s "%ScriptPath%\makecode.exe" $InstallDir$
+copy -s "%ScriptPath%\makecode\" $InstallDir$
 
+[LinkFolder_programms]
+set_basefolder common_programs
+set_subfolder ""
+set_link
+   name: makecode
+   target: $InstallDir$\MakeCode for microbit.exe
+   parameters:
+   working_dir:
+   icon_file: $InstallDir$\MakeCode for microbit.exe
+   icon_index: 0
+end_link
+
+[LinkFolder_icon]
+set_basefolder common_desktopdirectory
+set_subfolder ""
+set_link
+   name: makecode
+   target: $InstallDir$\MakeCode for microbit.exe
+   parameters:
+   working_dir:
+   icon_file: $InstallDir$\MakeCode for microbit.exe
+   icon_index: 0
+end_link

@@ -57,6 +57,7 @@ else
    
    Message "Erstelle Link auf Desktop"
    LinkFolder_delete
+   LinkFolder_deleteprogramms
    
    ;----------------------------------------------
 endif
@@ -70,6 +71,11 @@ endif
 delete -sf $InstallDir$
 
 [LinkFolder_delete]
-set_basefolder common_desktopdirectory
+set_basefolder common_programs
 set_subfolder ""
-delete_element "MakeCode for microbit"
+delete_element "makecode"
+
+[LinkFolder_deleteprogramms]
+set_basefolder common_programs
+set_subfolder ""
+delete_element "makecode"

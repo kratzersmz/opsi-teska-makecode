@@ -21,5 +21,15 @@ onceScript:
 customScript: 
 userLoginScript: 
 
+[ProductProperty]
+type: unicode
+name: desktopicon
+multivalue: False
+editable: True
+description: Löscht Icon auf dem Desktop
+values: ["ja", "nein"]
+default: ["nein"]
+
+
 
 
